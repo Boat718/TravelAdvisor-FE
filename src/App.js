@@ -4,7 +4,8 @@ import List from './components/List/List';
 import Map from './components/Map/Map';
 import PlaceDetails from './components/PlaceDetails/PlaceDetails';
 import {CssBaseline, Grid} from '@material-ui/core';
-
+import axios from 'axios';
+import localStorageService from './service/localStorageService';
 import {getPlacesData, getWeatherData} from './api';
 
 
@@ -20,6 +21,18 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [type, setType] = useState('restaurants');
   const [rating,setRating] = useState('');
+
+  const [username, setUsername] = useState("User");
+
+  const fetchHomepage = async () => {
+    const token = localStorageService.getToken();
+    const {data} = await axios.get("https://traveladvisor-backend.herokuapp.com/users/home",{ headers: {"Authorization" : `Bearer ${token}`} });
+    setUsername(data.username);
+  };
+
+  useEffect(() => {
+    fetchHomepage();
+    }, []);
 
   useEffect(()=>{
     navigator.geolocation.getCurrentPosition(({coords: {latitude, longitude}})=>{
@@ -53,7 +66,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <Header setCoordinates={setCoordinates}/>
+      <Header setCoordinates={setCoordinates} username={username}/>
       <Grid container spacing={3} style={{ width: '100%'}}>
         <Grid item xs={12} md={4}>
           <List 
