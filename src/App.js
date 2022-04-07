@@ -9,7 +9,7 @@ import localStorageService from './service/localStorageService';
 import {getPlacesData, getWeatherData} from './api';
 
 
-function App() {
+function App(props) {
 
   const [places, setPlaces] = useState([]);
   const [weatherData, setWeatherData] = useState([]);
@@ -62,11 +62,10 @@ function App() {
     }
   },[type, bounds]);
 
-
   return (
     <>
       <CssBaseline />
-      <Header setCoordinates={setCoordinates} username={username}/>
+      <Header setCoordinates={setCoordinates} username={username} setRole = {props.setRole}/>
       <Grid container spacing={3} style={{ width: '100%'}}>
         <Grid item xs={12} md={4}>
           <List 

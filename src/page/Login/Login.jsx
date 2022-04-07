@@ -22,7 +22,7 @@ export default function Login(props) {
       console.log(data)
       localStorageService.setToken(data.token);
       props.setRole("user")
-      navigate("/main");
+      navigate("/main",);
     }
     return (
       <div className={classes.bg}>

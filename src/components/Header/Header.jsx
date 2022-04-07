@@ -9,7 +9,7 @@ import useStyles from './styles';
 import axios from 'axios';
 import localStorageService from '../../service/localStorageService';
 
-export default function Header({ setCoordinates, username}) {
+export default function Header({ setCoordinates, username, setRole}) {
     const classes = useStyles();
     const navigate = useNavigate();
 
@@ -30,10 +30,11 @@ export default function Header({ setCoordinates, username}) {
     const handleClose = () => {
       setAnchorEl(null);
     };
-
+  
     const Logout = async () => {
       const {data} = await axios.post("https://traveladvisor-backend.herokuapp.com/users/logout");
       localStorageService.removeToken();
+      setRole("guest")
       navigate("/login");
 
     }
